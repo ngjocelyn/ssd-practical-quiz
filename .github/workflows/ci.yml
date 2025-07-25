@@ -26,6 +26,6 @@ jobs:
 
   ui-tests:
     needs: lint
-    uses: ./.github/workflows/ui-tests.yml
+    uses: ./.github/workflows/ui-test.yml
     permissions:
       contents: read
