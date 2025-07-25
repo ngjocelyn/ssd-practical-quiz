@@ -1,0 +1,24 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  dependency-check:
+    uses: ngjocelyn/ssd-practical-quiz/.github/workflows/dependency-check.yml@main
+    permissions:
+      contents: read
+
+  lint:
+    needs: dependency-check
+    uses: ngjocelyn/ssd-practical-quiz/.github/workflows/lint.yml@main
+    permissions:
+      contents: read
+#   tests:
+#     needs: [lint]
+#     uses: ngjocelyn/ssd-practical-quiz/.github/workflows/test.yml@main
+#     permissions:
+#       contents: read

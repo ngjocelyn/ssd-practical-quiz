@@ -5,6 +5,7 @@ import logo from "./logo.svg";
 
 function Home() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const validateSqlInjectionRegex = new RegExp(
@@ -23,11 +24,13 @@ function Home() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateSqlInjection(searchTerm)) {
-      alert("SQL Injection detected!");
+      setErrorMessage(
+        "SQL Injection detected! Please enter a safe search term."
+      );
       return;
     }
     if (validateXSS(searchTerm)) {
-      alert("XSS detected!");
+      setErrorMessage("Please enter a safe search term.");
       return;
     }
     navigate("/result", { state: { searchTerm } });
@@ -46,6 +49,11 @@ function Home() {
           />
           <button type="submit">Search</button>
         </form>
+
+        {/* Conditionally show error */}
+        {errorMessage && (
+          <p style={{ color: "red", marginTop: "1rem" }}>{errorMessage}</p>
+        )}
       </header>
     </div>
   );
