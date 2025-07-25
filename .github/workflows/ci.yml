@@ -17,8 +17,15 @@ jobs:
     uses: ngjocelyn/ssd-practical-quiz/.github/workflows/lint.yml@main
     permissions:
       contents: read
-#   tests:
-#     needs: [lint]
-#     uses: ngjocelyn/ssd-practical-quiz/.github/workflows/test.yml@main
-#     permissions:
-#       contents: read
+
+  integration-tests:
+    needs: lint
+    uses: ./.github/workflows/integration-tests.yml
+    permissions:
+      contents: read
+
+  ui-tests:
+    needs: lint
+    uses: ./.github/workflows/ui-tests.yml
+    permissions:
+      contents: read

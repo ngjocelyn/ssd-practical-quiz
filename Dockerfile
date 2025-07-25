@@ -18,7 +18,7 @@ WORKDIR /app
 
 RUN apk add --no-cache git \
     && git config --global user.name "Ng Min Yuan Jocelyn" \
-    && git config --global user.email "2301930@sit.singaporetech.edu.sg"
+    && git config --global user.email "2301930@SIT.singaporetech.edu.sg"
 
 # Install dependencies again for development
 COPY package.json package-lock.json ./

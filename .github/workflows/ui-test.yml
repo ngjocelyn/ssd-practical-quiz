@@ -1,0 +1,39 @@
+name: UI Tests
+
+on:
+  workflow_call:
+
+jobs:
+  selenium-ui-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt install -y ./google-chrome-stable_current_amd64.deb
+
+      - name: Start Docker services (web + nginx)
+        run: |
+          docker-compose up -d web nginx
+          echo "Waiting for app to be reachable at http://127.0.0.1/..."
+          sleep 15
+
+      - name: Run UI tests
+        run: npm run test:ui
+
+      - name: Stop Docker
+        run: docker-compose down
